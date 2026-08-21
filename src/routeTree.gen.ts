@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as PublicRouteImport } from './routes/public'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminDirectoryRouteImport } from './routes/admin.directory'
+import { Route as AdminIncomeRouteImport } from './routes/admin.income'
 import { Route as AdminOverviewRouteImport } from './routes/admin.overview'
 import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
 
@@ -42,6 +43,11 @@ const AdminDirectoryRoute = AdminDirectoryRouteImport.update({
   path: '/directory',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminIncomeRoute = AdminIncomeRouteImport.update({
+  id: '/income',
+  path: '/income',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminOverviewRoute = AdminOverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/public': typeof PublicRoute
   '/admin/directory': typeof AdminDirectoryRoute
+  '/admin/income': typeof AdminIncomeRoute
   '/admin/overview': typeof AdminOverviewRoute
   '/admin/tenants': typeof AdminTenantsRoute
   '/admin/': typeof AdminIndexRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/public': typeof PublicRoute
   '/admin/directory': typeof AdminDirectoryRoute
+  '/admin/income': typeof AdminIncomeRoute
   '/admin/overview': typeof AdminOverviewRoute
   '/admin/tenants': typeof AdminTenantsRoute
   '/admin': typeof AdminIndexRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/public': typeof PublicRoute
   '/admin/directory': typeof AdminDirectoryRoute
+  '/admin/income': typeof AdminIncomeRoute
   '/admin/overview': typeof AdminOverviewRoute
   '/admin/tenants': typeof AdminTenantsRoute
   '/admin/': typeof AdminIndexRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/public'
     | '/admin/directory'
+    | '/admin/income'
     | '/admin/overview'
     | '/admin/tenants'
     | '/admin/'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/public'
     | '/admin/directory'
+    | '/admin/income'
     | '/admin/overview'
     | '/admin/tenants'
     | '/admin'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/public'
     | '/admin/directory'
+    | '/admin/income'
     | '/admin/overview'
     | '/admin/tenants'
     | '/admin/'
@@ -152,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDirectoryRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/income': {
+      id: '/admin/income'
+      path: '/income'
+      fullPath: '/admin/income'
+      preLoaderRoute: typeof AdminIncomeRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/overview': {
       id: '/admin/overview'
       path: '/overview'
@@ -171,6 +190,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminDirectoryRoute: typeof AdminDirectoryRoute
+  AdminIncomeRoute: typeof AdminIncomeRoute
   AdminOverviewRoute: typeof AdminOverviewRoute
   AdminTenantsRoute: typeof AdminTenantsRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -178,6 +198,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminDirectoryRoute: AdminDirectoryRoute,
+  AdminIncomeRoute: AdminIncomeRoute,
   AdminOverviewRoute: AdminOverviewRoute,
   AdminTenantsRoute: AdminTenantsRoute,
   AdminIndexRoute: AdminIndexRoute,
