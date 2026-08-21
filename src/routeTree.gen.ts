@@ -15,6 +15,7 @@ import { Route as PublicRouteImport } from './routes/public'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminDirectoryRouteImport } from './routes/admin.directory'
 import { Route as AdminOverviewRouteImport } from './routes/admin.overview'
+import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const AdminOverviewRoute = AdminOverviewRouteImport.update({
   path: '/overview',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminTenantsRoute = AdminTenantsRouteImport.update({
+  id: '/tenants',
+  path: '/tenants',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/public': typeof PublicRoute
   '/admin/directory': typeof AdminDirectoryRoute
   '/admin/overview': typeof AdminOverviewRoute
+  '/admin/tenants': typeof AdminTenantsRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/public': typeof PublicRoute
   '/admin/directory': typeof AdminDirectoryRoute
   '/admin/overview': typeof AdminOverviewRoute
+  '/admin/tenants': typeof AdminTenantsRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/public': typeof PublicRoute
   '/admin/directory': typeof AdminDirectoryRoute
   '/admin/overview': typeof AdminOverviewRoute
+  '/admin/tenants': typeof AdminTenantsRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -79,9 +88,16 @@ export interface FileRouteTypes {
     | '/public'
     | '/admin/directory'
     | '/admin/overview'
+    | '/admin/tenants'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/public' | '/admin/directory' | '/admin/overview' | '/admin'
+  to:
+    | '/'
+    | '/public'
+    | '/admin/directory'
+    | '/admin/overview'
+    | '/admin/tenants'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -89,6 +105,7 @@ export interface FileRouteTypes {
     | '/public'
     | '/admin/directory'
     | '/admin/overview'
+    | '/admin/tenants'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -142,18 +159,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOverviewRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/tenants': {
+      id: '/admin/tenants'
+      path: '/tenants'
+      fullPath: '/admin/tenants'
+      preLoaderRoute: typeof AdminTenantsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
   AdminDirectoryRoute: typeof AdminDirectoryRoute
   AdminOverviewRoute: typeof AdminOverviewRoute
+  AdminTenantsRoute: typeof AdminTenantsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminDirectoryRoute: AdminDirectoryRoute,
   AdminOverviewRoute: AdminOverviewRoute,
+  AdminTenantsRoute: AdminTenantsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
