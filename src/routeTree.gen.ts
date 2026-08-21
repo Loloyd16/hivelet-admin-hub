@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as PublicRouteImport } from './routes/public'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminDirectoryRouteImport } from './routes/admin.directory'
 import { Route as AdminOverviewRouteImport } from './routes/admin.overview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDirectoryRoute = AdminDirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminOverviewRoute = AdminOverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/public': typeof PublicRoute
+  '/admin/directory': typeof AdminDirectoryRoute
   '/admin/overview': typeof AdminOverviewRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/public': typeof PublicRoute
+  '/admin/directory': typeof AdminDirectoryRoute
   '/admin/overview': typeof AdminOverviewRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -59,15 +67,29 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/public': typeof PublicRoute
+  '/admin/directory': typeof AdminDirectoryRoute
   '/admin/overview': typeof AdminOverviewRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/public' | '/admin/overview' | '/admin/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/public'
+    | '/admin/directory'
+    | '/admin/overview'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/public' | '/admin/overview' | '/admin'
-  id: '__root__' | '/' | '/admin' | '/public' | '/admin/overview' | '/admin/'
+  to: '/' | '/public' | '/admin/directory' | '/admin/overview' | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/public'
+    | '/admin/directory'
+    | '/admin/overview'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/directory': {
+      id: '/admin/directory'
+      path: '/directory'
+      fullPath: '/admin/directory'
+      preLoaderRoute: typeof AdminDirectoryRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/overview': {
       id: '/admin/overview'
       path: '/overview'
@@ -117,11 +146,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminDirectoryRoute: typeof AdminDirectoryRoute
   AdminOverviewRoute: typeof AdminOverviewRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminDirectoryRoute: AdminDirectoryRoute,
   AdminOverviewRoute: AdminOverviewRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
